@@ -27,7 +27,7 @@ class FormulaSRP:
         elif f=="res": make_matching(self); make_rkef_res(self)
         elif f=="car": make_atmost(self); make_car2(self)
         elif f=="lef": make_matching(self); make_lef(self)
-        # elif f=="car2": make_atmost(self); make_car(self)
+        elif f=="car2": make_atmost(self); make_car(self)
         else: raise ValueError(f"Choose a valid formula: {f} not in list")
         self.cnf = [eval(el) for el in self.e.keys()]
         # Reduce option 

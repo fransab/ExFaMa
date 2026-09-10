@@ -542,16 +542,20 @@ def text_expl(nodes, prefp = None):
                 text += f", one among: {jprefs}."
             else:
                 text += ". However, no other agent satisfies that requirement."
-        elif node.startswith("ref2"):
+        elif node.startswith("ref2") or node.startswith("ref2"):
             if prefp is None: raise ValueError("Please provide pref profile")
             li = eval(node[4:])
+
             if len(li) == 1:
                 p = li[0]
-                ags = set([ag for ag,prefs in enumerate(prefp) if prefs[0]==p])
+                if type(prefp) == dict:
+                    ags = set([ag for ag in prefp if prefp[ag][0] == p])
+                else:
+                    ags = set([ag for ag,prefs in enumerate(prefp) if prefs[0]==p])
                 text += f"Agent {p} needs to be matched with an agent that ranks them first, one among: {ags}."
             else:
                 p,l,i = li 
-                text += f"Either agent {i} should be matched to an agent they rank in their top {l-1}, or agent {p} should be matched to agent that ranks them in their top {l}."
+                text += f"Either agent {i} should be matched to an agent they rank in their top {l-1}s, or agent {p} should be matched to agent that ranks them in their top {l}s."
         elif node.startswith("PREF"):
             i = eval(node[4:])[0]
             text += f"Agent {i} should be matched with an agent they prefer over their previous assignment."

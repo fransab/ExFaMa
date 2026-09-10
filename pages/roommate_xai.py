@@ -38,7 +38,7 @@ lbl = "Please enter the number of agents in your instance"
 colun = st.columns(3)
 with colun[1]:
     oldn = st.session_state.get("n",-1)
-    n = st.number_input(label = lbl, min_value = 4, step=1, value=6, key="n",kwargs={'with_prefs':True}, disabled = st.session_state.srpdemo == "primary")
+    n = st.number_input(label = lbl, min_value = 4, step=2, value=6, key="n",kwargs={'with_prefs':True}, disabled = st.session_state.srpdemo == "primary")
     
     # Custom agent names input
     custom_names = st.multiselect(

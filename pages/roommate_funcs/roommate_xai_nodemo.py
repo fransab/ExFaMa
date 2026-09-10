@@ -20,11 +20,16 @@ def roommate_xai_nodemo():
     prefprofile(agents)
 
 
+
     if crit == "lef":
         local_graph(agents)
 
     p = retrieve_preferences()
+    from pages.roommate_funcs.display import rename
 
+    for cur_agent in p:
+        preferences = p[cur_agent]
+        print(rename(str(cur_agent)) + ": \\quad " + rename("  \\succ ".join(["\\whiteobj{"+str(el)+"}" for el in preferences])) + " \\\\")
     if not p_is_complete(p):
         st.info("Please provide full preferences")
     else:

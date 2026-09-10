@@ -1,10 +1,12 @@
 import streamlit as st
-NAMES  = []
-st.set_page_config(page_title="My App", page_icon="✨")
 
+NAMES = []
+st.set_page_config(page_title="ExFaMa", page_icon="✨")
+
+# Define pages based on whether evaluation should be shown
 pages = {
-     "": 
-     [st.Page("home.py", title="Home", icon="🧭")],
+    "": 
+    [st.Page("home.py", title="Home", icon="🧭")],
     "Settings": 
     [
         st.Page("pages/roommate_xai.py", title="Roommate Matching", icon="🧑‍🤝‍🧑"),
@@ -13,6 +15,6 @@ pages = {
 }
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     pg = st.navigation(pages)
     pg.run()

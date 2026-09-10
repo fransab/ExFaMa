@@ -1,1 +1,1 @@
-NAMES = ["Luc","Ana","Paul","Lea","Tom","Julie","Max","Laure","Hugo","Alice"]
+NAMES = ["Luc", "Ana", "Paul", "Lea", "Tom", "Julie", "Max", "Laure", "Hugo", "Alice", "Eli", "Eva", "Leo", "Mia", "Noe", "Elsa", "Rémi", "Iris", "Yann", "Zoe", "Marc", "Nina", "Jean", "Rose", "Louis", "Emma", "Jules", "Inès", "Alain", "Chloé"]

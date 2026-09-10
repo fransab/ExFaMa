@@ -50,6 +50,19 @@ def prefprofile_style():
             font-weight: bold;
             margin-right: 1.5em;
     }
+
+    .preference-profile-scroll {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        max-height: 60vh;
+        overflow-x: auto;
+        overflow-y: auto;
+        overflow-wrap: normal;
+        padding: 0.5rem;
+        word-break: normal;
+        white-space: nowrap;
+    }
     </style>
     """
     return circle_style
@@ -116,12 +129,15 @@ def display_full_profile(P, highlights={},matching={}):
     m : dict, optional 
         Partial or full matching {a:b,...} to show with a red circle 
     """
+    if len(matching) != len(P):
+        matchedags = list( matching.keys() ) 
+        for ag in matchedags:
+            matching[ matching[ag]  ] = ag
 
     fulltext = []
-    fulltext.append( prefprofile_style() )
 
     for ag in range(len(P)):
-        if not (ag in highlights or ag in matching):
+        if (highlights != {} or matching != {}) and not (ag in highlights or ag in matching):
             continue
         partner = None 
         highlight = {}
@@ -132,13 +148,19 @@ def display_full_profile(P, highlights={},matching={}):
         html = display_preference_with_circles(P[ag], ag, partner, highlight)
         fulltext.append( html )
 
-    return "<br>".join(fulltext)
+    profile_html = "<br>".join(fulltext)
+    return (
+        prefprofile_style()
+        + '<div class="preference-profile-scroll">'
+        + profile_html
+        + "</div>"
+    )
 
 @st.dialog("Detailed explanation")
 def provide_ex(texts, prof):
     for el in texts:
         st.write(el)
-    st.markdown( prof, unsafe_allow_html=True )
+    st.html(prof)
 
 
 
@@ -464,6 +486,6 @@ def display_clickable_profile_html(P):
             
             if rank < len(P[agent_idx]) - 1:
                 with cols[ag_col_sep]:
-                    st.markdown("≻")
+                    st.markdown("â‰»")
     
     return st.session_state.user_matching

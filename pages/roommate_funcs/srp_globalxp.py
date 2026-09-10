@@ -11,6 +11,18 @@ def srp_globalxp(F):
     st.session_state["it"] = 0
     cnf = F.cnf
     mus = retrieve_mus(cnf)
+
+    from .cnf import FormulaSRP 
+    from .display import rename
+    # Fcar = FormulaSRP(F.n,F.p, F.k, "car")
+    # muscar = [i for i in range(10)]
+    # i = 0
+
+
+    # s = Expl(SAT_Imp_Graph(muscar,Fcar),Fcar)
+    # s.start()
+
+
     for el in mus:
         elo = str(sorted(el))
         if elo not in F.e:
