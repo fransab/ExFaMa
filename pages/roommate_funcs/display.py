@@ -486,6 +486,6 @@ def display_clickable_profile_html(P):
             
             if rank < len(P[agent_idx]) - 1:
                 with cols[ag_col_sep]:
-                    st.markdown("â‰»")
+                    st.markdown("≻")
     
     return st.session_state.user_matching
