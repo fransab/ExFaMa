@@ -6,7 +6,7 @@ st.set_page_config(page_title="ExFaMa", page_icon="✨")
 # Define pages based on whether evaluation should be shown
 pages = {
     "": 
-    [st.Page("home.py", title="Home", icon="🧭")],
+    [st.Page("home.py", title="Home", icon="🧭"), st.Page("pages/evaluation.py", title="Evaluation")],
     "Settings": 
     [
         st.Page("pages/roommate_xai.py", title="Roommate Matching", icon="🧑‍🤝‍🧑"),

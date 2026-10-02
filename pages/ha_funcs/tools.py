@@ -75,7 +75,7 @@ def load_random(**kwargs):
 
 from pages.roommate_funcs.roommate_sat import get_matching
 from pages.roommate_funcs.tools import compare_matchings
-def gen_local_xp(F,agent,obj,m=None):
+def gen_local_xp(F,agent,obj,m=None, mus = None):
     text = None 
     F.add_pref(agent, obj)
     clause = eval([clause for clause in F.e if F.e[clause][0].startswith("PREF")][0])
@@ -98,7 +98,7 @@ def gen_local_xp(F,agent,obj,m=None):
         else:
             print(f"{agent} should get better than {obj}")
 
-            mus = retrieve_mus(F)
+            mus = retrieve_mus(F) if mus == None else mus
             while clause not in mus:
                 G = deepcopy(F)
                 altc = [musclause for musclause in mus if all([v>0 for v in musclause])][0]

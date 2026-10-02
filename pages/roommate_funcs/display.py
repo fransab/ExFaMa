@@ -129,10 +129,10 @@ def display_full_profile(P, highlights={},matching={}):
     m : dict, optional 
         Partial or full matching {a:b,...} to show with a red circle 
     """
-    if len(matching) != len(P):
-        matchedags = list( matching.keys() ) 
-        for ag in matchedags:
-            matching[ matching[ag]  ] = ag
+    # if len(matching) != len(P):
+    #     matchedags = list( matching.keys() ) 
+    #     for ag in matchedags:
+    #         matching[ matching[ag]  ] = ag
 
     fulltext = []
 
@@ -219,10 +219,12 @@ def lastkey(dic):
 
 
 
-def completedic(dic,n): # If a dictionary contains an explanation that is complete i.e. no missing steps
+def completedic(dic,n, *, roommate=None): # If a dictionary contains an explanation that is complete i.e. no missing steps
     first = firstkey(dic)
     if isatleast(first):
-        if "opened_srp" in st.session_state and st.session_state["opened_srp"]:
+        is_roommate = (st.session_state.get("opened_srp", False)
+                       if roommate is None else roommate)
+        if is_roommate:
             return len(dic) == n
         else: 
             return len(dic) == n+1
@@ -239,7 +241,7 @@ def completedic(dic,n): # If a dictionary contains an explanation that is comple
     print("is complete")
     return True
 
-def gendic(text,n):
+def gendic(text,n, *, roommate=None):
     stack = [{}]
     print("*******************")
     print(text)
@@ -280,7 +282,7 @@ def gendic(text,n):
             print(stack[-1])
             print("keys are")
             stack[-1].keys()
-            while completedic(cur,n) and len(stack) > 2:
+            while completedic(cur,n, roommate=roommate) and len(stack) > 2:
                 lastdic = stack.pop()
                 print("after pop stack is")
                 print(stack[-1])
@@ -298,7 +300,9 @@ def gendic(text,n):
     return stack[1]
 
 
-def gen_expprof(text,P):
+def gen_expprof(text,P, *, detail_mode="dialog", roommate=None):
+    if detail_mode == "dialog" and "it" not in st.session_state:
+        st.session_state["it"] = 0
     print("===================")
     print("text is")
     print(text)
@@ -330,6 +334,20 @@ def gen_expprof(text,P):
             else:
                 expl = f"Agent {i} is matched with agent {p}, even though agent {j} ranks {p} better than {i} does. So agent {j} should have an agent they prefer over {p}."
 
+        # Questionnaire details are pre-rendered and opened entirely client-side.
+        # The default dialog path remains available to the interactive tools.
+        is_roommate = (st.session_state.get("opened_srp", False)
+                       if roommate is None else roommate)
+        p = int(p) if is_roommate else str(p)
+        if detail_mode == "popover":
+            with st.popover("Check"):
+                st.markdown("**Detailed explanation**")
+                st.write(rename(expl))
+                st.html(display_full_profile(
+                    P, highlights={j: [rank(P, j, p)]}, matching={i: p}
+                ))
+            return
+
         val = "pressed_" + str(st.session_state["it"])
         btnkey = 'button_' + str(st.session_state["it"])
 
@@ -341,10 +359,6 @@ def gen_expprof(text,P):
 
         if st.session_state[val]:
             expl = rename(expl)
-            if st.session_state.opened_srp:
-                p = int(p)
-            else:
-                p = str(p)
             provide_ex([expl], display_full_profile(P, highlights={j:[rank(P,j,p)]}, matching={i:p}))
 
             st.session_state[val] = False
@@ -352,18 +366,25 @@ def gen_expprof(text,P):
         st.session_state["it"] += 1
 
 
-def displayDic(dico, preferences):
+def displayDic(dico, preferences, *, detail_mode="dialog", roommate=None):
+    """Render a proof; use popovers for details that must not trigger reruns.
+
+    Existing two-argument callers retain the dialog UI and session-based mode.
+    Pass roommate=True for a fixed roommate instance independent of other tabs.
+    """
+    if detail_mode not in {"dialog", "popover"}:
+        raise ValueError("detail_mode must be 'dialog' or 'popover'")
     if dico == {}:
         return 
 
     for el in dico:
         st.markdown(rename(el))
 
-        gen_expprof(el, preferences)
+        gen_expprof(el, preferences, detail_mode=detail_mode, roommate=roommate)
 
         if dico[el] != {}:
             with st.expander("Why is that not possible ?"):
-                displayDic(dico[el], preferences)
+                displayDic(dico[el], preferences, detail_mode=detail_mode, roommate=roommate)
 
 
 

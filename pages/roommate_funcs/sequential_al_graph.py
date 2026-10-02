@@ -9,10 +9,10 @@ from .explain_mus import make_color
 
 from time import sleep
 import networkx as nx 
-from random import choice 
+from random import choice , Random
 
 class Seq:
-    def __init__(self, satimp, F):
+    def __init__(self, satimp, F, seed = None):
         self.mus = satimp.mus # list of clauses
         self.g = nx.DiGraph()
         self.p = F.p
@@ -23,6 +23,8 @@ class Seq:
         self.log = {"LENGTH":-1,"LENDFS":-1}
         
         self.satimp = satimp
+
+        self.seed = None if seed is None else Random(seed)
         
         # satimp.draw()
         
@@ -50,28 +52,28 @@ class Seq:
     def nodechoice(self, active_nodes, activatable_nodes):
         bot_clauses = tuple(filter(lambda x: x in self.endclauses, activatable_nodes))
         if bot_clauses:
-            return choice(bot_clauses)
+            return choice(bot_clauses) if self.seed == None else self.seed.choice(sorted(bot_clauses, key=str))
         var_nodes = tuple(filter(lambda x: self.nodetype(x)=="var", activatable_nodes))
         if var_nodes:
-            return choice(var_nodes)
+            return choice(var_nodes) if self.seed == None else self.seed.choice(sorted(var_nodes, key=str))
         
         prefs = [node for node in activatable_nodes if node.startswith("PREF")]
         if prefs != []: # If we're doing local expl for an agent we want to put this clause first 
-            return prefs[0]
+            return prefs[0] if self.seed is None else sorted(prefs)[0]
         
         if self.H is not None:
             if self.order is not None:
                 order = tuple(filter(lambda x: x in activatable_nodes, self.order))
                 if len(order) == 0:
-                    return choice(tuple(activatable_nodes))
+                    return choice(tuple(activatable_nodes)) if self.seed == None else self.seed.choice(sorted(activatable_nodes, key=str))
 
                 return order[0]
             else:
                 order = self.H(active_nodes, activatable_nodes, self)
                 if len(order) == 0:
-                    return choice(tuple(activatable_nodes))
+                    return choice(tuple(activatable_nodes)) if self.seed == None else self.seed.choice(sorted(activatable_nodes, key=str))
                 return order[0]
-        return choice(tuple(activatable_nodes))
+        return choice(tuple(activatable_nodes)) if self.seed == None else self.seed.choice(sorted(activatable_nodes, key=str))
     
     def draw(self,curactive):
         color = {}
@@ -124,7 +126,7 @@ class Seq:
             # endok = [clause for clause in nextc if clause in self.end]
             endok = [] # Clauses that lead to contradiction
             if endok:
-                self.sequential(newactive, activatable.union([choice(endok)]))
+                self.sequential(newactive, activatable.union([choice(endok) if self.seed == None else self.seed.choice(sorted(endok, key=str))]))
             else:
                 self.sequential(newactive, activatable.union(nextc))
         
