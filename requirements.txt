@@ -6,3 +6,4 @@ supabase-auth==2.31.0
 supabase-functions==2.31.0
 python-sat==0.1.8.dev15
 streamlit==1.50.0
+tqdm
