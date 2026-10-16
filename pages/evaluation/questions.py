@@ -293,7 +293,7 @@ def page11():
 
     with st.container(border=True):
         st.radio("Now, I understand why there is no fair matching.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page11", "understanding"))
-        st.radio("From the explanation, I understand why the proposed assignment can be considered fair.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page11", "algorithm_working"))
+        st.radio("From the explanation, I understand why the algorithm reached this conclusion.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page11", "algorithm_working"))
         st.radio("The explanation is satisfactory.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page11", "satisfaction"))
         st.radio("The explanation has sufficient detail.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page11", "detail"))
         st.radio("The explanation contains irrelevant details.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page11", "completeness"))
@@ -316,6 +316,7 @@ def page13():
     mus = [[7, 8, 9, 10, 15], [-15], [-10], [-8], [-9], [-7]]
     st.title("Questionnaire")
     st.subheader(f"Question {question_position(2)}")
+    st.subheader(f"Question {question_position(1)}")
     st.write("The following instance has no matching satisfying rank-envy-freeness.")
 
     cols = st.columns(2)
@@ -328,34 +329,33 @@ def page13():
 
     with st.container(border=True):
         st.radio("Now, I understand why there is no fair matching.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page13", "understanding"))
-        st.radio("From the explanation, I understand why the proposed assignment can be considered fair.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page13", "algorithm_working"))
+        st.radio("From the explanation, I understand why the algorithm reached this conclusion.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page13", "algorithm_working"))
         st.radio("The explanation is satisfactory.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page13", "satisfaction"))
         st.radio("The explanation has sufficient detail.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page13", "detail"))
         st.radio("The explanation contains irrelevant details.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page13", "completeness"))
         tebox("page13")
 
 def page14():
-    prefs = ((5, 1, 3, 2, 4), (0, 3, 5, 4, 2), (1, 0, 4, 3, 5), (5, 4, 0, 2, 1), (3, 2, 5, 0, 1), (0, 3, 4, 1, 2))
+    prefs = ((1,2,3,4,5),(2,0,3,4,5),(0,1,3,4,5),(4,5,0,1,2),(5,3,0,1,2),(3,4,0,1,2))
     m = {0:5,1:2,2:1,3:4,4:3,5:0}
 
     st.title("Questionnaire")
     st.subheader(f"Question {question_position(3)}")
-
-    st.write("The following instance has a matching satisfying rank-envy-freeness. However Ana feels dissatisfied by their assignment and would like to know why they couldn't have a roommate they prefer to their assigned one.")
+    st.write("The following instance has a matching satisfying rank-envy-freeness. However Luc feels dissatisfied by their assignment and would like to know why they couldn't have a roommate they prefer to their assigned one.")
     cols = st.columns(2)
     with cols[0]:
         st.html(display_full_profile(prefs, matching = m))
 
     with st.container(border=True):
-        st.radio("It is clear to me why Ana cannot have a preferred roommate.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page14", "understanding"))
+        st.radio("It is clear to me why Luc cannot have a preferred roommate.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page14", "understanding"))
 
 def page15():
-    prefs = ((5, 1, 3, 2, 4), (0, 3, 5, 4, 2), (1, 0, 4, 3, 5), (5, 4, 0, 2, 1), (3, 2, 5, 0, 1), (0, 3, 4, 1, 2))
+    prefs = ((1,2,3,4,5),(2,0,3,4,5),(0,1,3,4,5),(4,5,0,1,2),(5,3,0,1,2),(3,4,0,1,2))
     m = {0:5,1:2,2:1,3:4,4:3,5:0}
-    mus = [[-5], [-12], [-8], [-1], [1, 5, 8, 12]]
+    mus = [[-7], [-1], [-4], [-2], [1, 2, 4, 7]]
     st.title("Questionnaire")
     st.subheader(f"Question {question_position(3)}")
-    st.write("The following instance has a matching satisfying rank-envy-freeness. However Ana feels dissatisfied by their assignment and would like to know why they couldn't have a roommate they prefer to their assigned one.")
+    st.write("The following instance has a matching satisfying rank-envy-freeness. However Luc feels dissatisfied by their assignment and would like to know why they couldn't have a roommate they prefer to their assigned one.")
 
     cols = st.columns(2)
     with cols[0]:
@@ -363,11 +363,11 @@ def page15():
     
     with cols[1]:
         with st.container(border = True):
-            gen_locexp_proc(prefs, m, 1, mus, key = "page15")
+            gen_locexp_proc(prefs, m, 0, mus, key = "page15")
 
     with st.container(border=True):
-        st.radio("Now, I understand why Ana cannot have a preferred roommate.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page15", "understanding"))
-        st.radio("From the explanation, I understand why the proposed assignment can be considered fair.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page15", "algorithm_working"))
+        st.radio("Now, I understand why Luc cannot have a preferred roommate.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page15", "understanding"))
+        st.radio("From the explanation, I understand why the algorithm reached this conclusion.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page15", "algorithm_working"))
         st.radio("The explanation is satisfactory.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page15", "satisfaction"))
         st.radio("The explanation has sufficient detail.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page15", "detail"))
         st.radio("The explanation contains irrelevant details.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page15", "completeness"))
@@ -402,7 +402,7 @@ def page17():
 
     with st.container(border=True):
         st.radio("Now, I understand why there is no fair matching.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page17", "understanding"))
-        st.radio("From the explanation, I understand why the proposed assignment can be considered fair.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page17", "algorithm_working"))
+        st.radio("From the explanation, I understand why the algorithm reached this conclusion.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page17", "algorithm_working"))
         st.radio("The explanation is satisfactory.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page17", "satisfaction"))
         st.radio("The explanation has sufficient detail.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page17", "detail"))
         st.radio("The explanation contains irrelevant details.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page17", "completeness"))
@@ -437,7 +437,7 @@ def page19():
 
     with st.container(border=True):
         st.radio("Now, I understand why there is no fair matching.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page19", "understanding"))
-        st.radio("From the explanation, I understand why the proposed assignment can be considered fair.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page19", "algorithm_working"))
+        st.radio("From the explanation, I understand why the algorithm reached this conclusion.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page19", "algorithm_working"))
         st.radio("The explanation is satisfactory.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page19", "satisfaction"))
         st.radio("The explanation has sufficient detail.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page19", "detail"))
         st.radio("The explanation contains irrelevant details.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page19", "completeness"))
@@ -474,7 +474,7 @@ def page21():
 
     with st.container(border=True):
         st.radio("Now, I understand why Paul cannot have a preferred roommate.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page21", "understanding"))
-        st.radio("From the explanation, I understand why the proposed assignment can be considered fair.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page21", "algorithm_working"))
+        st.radio("From the explanation, I understand why the algorithm reached this conclusion.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page21", "algorithm_working"))
         st.radio("The explanation is satisfactory.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page21", "satisfaction"))
         st.radio("The explanation has sufficient detail.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page21", "detail"))
         st.radio("The explanation contains irrelevant details.",options=["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],horizontal=True,index=None,key=answer_key("page21", "completeness"))
