@@ -88,6 +88,9 @@ def gen_local_xp(F,agent,obj,m=None, mus = None):
             s = Expl(SAT_Imp_Graph(mus,F), F)
             s.start()
             text = s.text 
+            print(mus)
+            print(text)
+
     else:
         if g.status:
             # text = [f"There exists a matching where agent {agent} has a better partner, sorry !"]
@@ -99,12 +102,14 @@ def gen_local_xp(F,agent,obj,m=None, mus = None):
             print(f"{agent} should get better than {obj}")
 
             mus = retrieve_mus(F) if mus == None else mus
+
             while clause not in mus:
                 G = deepcopy(F)
                 altc = [musclause for musclause in mus if all([v>0 for v in musclause])][0]
                 G.cnf.remove(altc)
                 mus = retrieve_mus(G)
-            
+            print("mus")
+            print(mus)
             print([F.e[str(clause)] for clause in mus])
             print("clause list")
             for clause in mus:
@@ -120,7 +125,8 @@ def gen_local_xp(F,agent,obj,m=None, mus = None):
             text = s.text 
             print(text)
             print("got soemthing selse")
-
+            print("mus is")
+            print(mus)
 
     return text
 

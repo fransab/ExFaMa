@@ -243,59 +243,28 @@ def completedic(dic,n, *, roommate=None): # If a dictionary contains an explanat
 
 def gendic(text,n, *, roommate=None):
     stack = [{}]
-    print("*******************")
-    print(text)
-    for _ in range(4):
-        print("*******************")
-
     
     for line in text:
         cur = stack[-1]
-        print(line)
+
         if isassume(line):
-            print("is assume")
             line = "- " + line
             cur[line] = {} 
-            # if len(cur) > 0:
-            #     last_key = lastkey(cur)
-            #     cur[last_key][line] = {}
-            # else:
-            #     # If current dict is empty, add directly
-            #     cur[line] = {}
-            print("stack is")
-            print(stack[-1])
 
         if isatleast(line) or (isrkres(line) and lenrkresset(line)>0) or ispref(line) or islef(line) > 0:
-            print("is at least")
             stack.append({line:{}})
-            print("stack is")
-            print(stack[-1])
 
         if isatmost(line) or isrkres(line) and lenrkresset(line)==0 or islef(line)==-1:
-            print("is stop")
 
             if line != "Contradiction":
                 cur[lastkey(cur)] = {line:{}}
-                print("line will be put to ",lastkey(cur))
 
-            print("stack is")
-            print(stack[-1])
-            print("keys are")
             stack[-1].keys()
             while completedic(cur,n, roommate=roommate) and len(stack) > 2:
                 lastdic = stack.pop()
-                print("after pop stack is")
-                print(stack[-1])
                 k = lastkey( stack[-1] )
                 stack[-1][k] = lastdic 
                 cur = stack[-1]
-                print("scaled one")
-            print("now stack is")
-            print(stack[-1])
-        print("====================")
-
-
-
 
     return stack[1]
 
@@ -303,19 +272,12 @@ def gendic(text,n, *, roommate=None):
 def gen_expprof(text,P, *, detail_mode="dialog", roommate=None):
     if detail_mode == "dialog" and "it" not in st.session_state:
         st.session_state["it"] = 0
-    print("===================")
-    print("text is")
-    print(text)
-    print("P is")
-    print(P)
+
     if isrkres(text) or islef(text):
         if isrkres(text):
-            print("isrkres")
             if lenrkresset(text) == 0:
                 print("is empty")
                 i,j,p = retrieve_info_rkres_empty(text)
-                print("ijp are")
-                print(i, j, p)
                 # expl = f"We see that agent {j} ranks agent {p} better than agent {i} does, so they should have a partner they prefer over {p}, which is impossible since it is already their first choice."
                 expl = f"Agent {i} is matched with agent {p}, even though agent {j} ranks {p} better than {i} does. So agent {j} should have an agent they prefer over {p}, which is impossible since they are their first choice."
             else:
