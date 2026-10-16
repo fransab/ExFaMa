@@ -36,7 +36,7 @@ def answer_page_key(page):
     return f"page{page}" if isinstance(page, int) else page
 
 COMMON_RATING_LABELS = {
-    "algorithm_working": "From the explanation, I understand why the proposed assignment can be considered fair.",
+    "algorithm_working": "From the explanation, I understand why the algorithm reached this conclusion.",
     "satisfaction": "The explanation is satisfactory.",
     "detail": "The explanation has sufficient detail.",
     "completeness": "The explanation contains irrelevant details.",

@@ -31,8 +31,7 @@ if st.session_state.srpdemo == "primary":
     load_correct_instance()
 
 st.title("Explanations for the Roommate Matching Problem")
-print("*******************")
-print("running")
+
 
 lbl = "Please enter the number of agents in your instance"
 colun = st.columns(3)

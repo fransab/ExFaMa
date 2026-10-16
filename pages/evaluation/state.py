@@ -75,10 +75,11 @@ def navigate(direction, page, fields):
     if direction == 1 and page == 9:
         try:
             ensure_question_order()
-        except Exception:
+        except Exception as e:
             st.session_state["evaluation_error"] = (
                 "Could not assign a question order. Please try again."
             )
+            print(e)
             return
 
     page_order = get_page_order()

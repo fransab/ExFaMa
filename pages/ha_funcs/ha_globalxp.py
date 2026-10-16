@@ -30,10 +30,6 @@ def ha_globalxp(F):
 
     
     if st.button("Why?"):
-
-        print("******************************")
-        print("******************************")
-        print("******************************")
         st.session_state.current_explanation = gendic(text, st.session_state["n"])
         st.session_state.current_preferences = F.p
 

@@ -13,8 +13,6 @@ def save_evaluation(payload):
     so an INSERT policy is sufficient.
     """
     answers_dict = build_evaluation_row(payload["answers"])
-    print("The given answres dict is ")
-    print(answers_dict)
     supabase = get_supabase_client()
     supabase.table("evaluation").insert(
         answers_dict, returning="minimal",

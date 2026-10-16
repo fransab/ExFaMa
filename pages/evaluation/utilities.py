@@ -44,7 +44,6 @@ def convertlatex(latexprof = ""):
             name = name[:-1]
             indx = NAMES.index(name)
             prefprof.append( indx )
-            print(pref)
             if _type != "\\whiteobj":
                 o[i] = indx
         p.append(prefprof)
@@ -73,24 +72,17 @@ def convert(ex):
     for line in ex:
         line = line.strip()
         check = line.split(" ")
-        print(check)
         if check[0] == "\\item":    
             line = line.replace("\\item","")
-            print("yes")
             if len(check) > 1 and check[1] == "Assume":
                 text.append("\t"*nbtab + f"st.write(\"-{line}\")")
             else:
                 text.append("\t"*nbtab + f"st.write(\"{line}\")")
         if check[0] == "\\begin{itemize}":
-            print("yesitem")
             text.append("\t"*nbtab +"with st.expander(\"Why not?\"):")
             nbtab += 1
         if check[0] == "\\end{itemize}":
             nbtab -= 1
-    print("=====================")
-    print("====convert expl=====")
-    for el in text:
-        print(el)
     return True 
     
 expl = r""" 
