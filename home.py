@@ -18,7 +18,7 @@ st.subheader("*Two matching settings:*")
 
 st.session_state["opened_ha"] = False 
 st.session_state["opened_ha"] = False
-print("This is the front page")
+
 
 settings = st.columns(2)
 with settings[0]:

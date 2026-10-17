@@ -13,7 +13,7 @@ from .ordering import get_page_order, get_question_order, set_question_order
 from .order_assignment import ensure_question_order
 
 import traceback
-
+import os 
 PRELIMINARY_PAGES = frozenset(range(3, 8))
 
 
@@ -75,11 +75,11 @@ def navigate(direction, page, fields):
     if direction == 1 and page == 9:
         try:
             ensure_question_order()
-        except Exception as e:
+        except Exception:
             st.session_state["evaluation_error"] = (
                 "Could not assign a question order. Please try again."
             )
-            print(e)
+            traceback.print_exc()
             return
 
     page_order = get_page_order()
