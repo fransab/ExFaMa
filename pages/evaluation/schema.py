@@ -17,7 +17,7 @@ DEMOGRAPHIC_LABELS = {
     "diploma": "Highest achieved or ongoing diploma",
 }
 DEMOGRAPHIC_OPTIONS = {
-    "age_group": ("<18", "18-25", "25-40", "+40"),
+    "age_group": ("<18", "18-25", "26-40", "+40"),
     "region": ("Europe", "North America", "South America", "Australia", "Asia", "Other"),
     "diploma": ("secondary education", "college", "master degree", "phd"),
 }
