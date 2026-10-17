@@ -4,3 +4,6 @@ pysat==3.1.0
 python-sat==0.1.8.dev15
 streamlit==1.50.0
 tqdm>=4.60.1
+supabase==2.31.0
+supabase-auth==2.31.0
+supabase-functions==2.31.0
